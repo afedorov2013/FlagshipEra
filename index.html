@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FlagshipEra — New York Commercial Real Estate</title>
 
-<!-- Fonts -->
+<!-- Fonts: Per Corcoran brand guidelines, primary = Chronicle Display (Georgia as web alternative),
+     secondary = Avenir (Helvetica as web alternative). Both are system fonts, no external load needed.
+     Keeping Google Fonts link for the dark theme which still uses Cormorant Garamond / Nunito Sans. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Nunito+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 
@@ -22,22 +24,26 @@
 /* ---------- RESET ---------- */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ---------- BRAND COLORS (edit these to change the palette) ---------- */
+/* ---------- BRAND COLORS — Corcoran Brand Guidelines ---------- */
+/* Primary: Black #231f20 + White #ffffff (monochromatic)          */
+/* The brand is sophisticated, minimal, black & white.             */
 :root {
-  --color-ink:        #1a1a1a;
-  --color-ink-light:  #555;
-  --color-ink-faint:  #999;
-  --color-cream:      #faf9f6;
-  --color-white:      #ffffff;
-  --color-warm:       #c8a97e;      /* gold accent     */
-  --color-warm-light: #e8dcc8;      /* soft gold tint   */
-  --color-warm-dark:  #a68b5b;      /* darker gold      */
-  --color-line:       #e8e4de;
-  --color-surface:    #f4f1ec;
+  --color-ink:        #231f20;      /* Corcoran Black              */
+  --color-ink-light:  #4a4546;      /* softer text                 */
+  --color-ink-faint:  #8a8586;      /* muted / captions            */
+  --color-cream:      #f7f6f4;      /* warm off-white              */
+  --color-white:      #ffffff;      /* Corcoran White              */
+  --color-warm:       #231f20;      /* accent = black (monochrome) */
+  --color-warm-light: #e5e3e0;      /* light grey tint             */
+  --color-warm-dark:  #231f20;      /* accent dark = black         */
+  --color-line:       #dddbd8;      /* subtle dividers             */
+  --color-surface:    #f0eeeb;      /* light surface               */
 
-  /* FONTS */
-  --font-heading: "Cormorant Garamond", Georgia, serif;   /* Corcoran: Chronicle Display alternative */
-  --font-body:    "Nunito Sans", system-ui, sans-serif;   /* Corcoran: Avenir alternative */
+  /* FONTS — Per Corcoran Brand Guidelines                         */
+  /* Primary: Chronicle Display → Georgia (approved alternative)   */
+  /* Secondary: Avenir → Helvetica (approved alternative)          */
+  --font-heading: Georgia, "Times New Roman", serif;
+  --font-body:    Helvetica, "Helvetica Neue", Arial, sans-serif;
 
   --max-width: 1280px;
   --nav-height: 72px;
@@ -56,6 +62,10 @@ html.theme-grey {
   --color-warm-dark:  #d4a574;      /* brass / gold highlight  */
   --color-line:       #3a332d;      /* dark separator          */
   --color-surface:    #252019;      /* dark surface            */
+
+  /* Dark theme uses Google Fonts instead of system fonts */
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-body:    "Nunito Sans", system-ui, sans-serif;
 }
 html.theme-grey nav {
   background: rgba(30,26,23,0.95);
@@ -105,9 +115,8 @@ html.theme-grey .ticker {
 html.theme-grey footer {
   background: #121010;
 }
-html.theme-grey .corcoran-logo-bar svg text {
-  fill: var(--color-ink);
-}
+html.theme-grey .corcoran-logo-light { display: none; }
+html.theme-grey .corcoran-logo-dark { display: inline; }
 html.theme-grey .nav-links.open {
   background: var(--color-white);
   border-bottom-color: var(--color-line);
@@ -857,7 +866,8 @@ nav .container {
   transition: opacity 0.25s;
 }
 .corcoran-logo-bar a:hover { opacity: 0.7; }
-.corcoran-logo-bar svg { height: 32px; width: auto; }
+.corcoran-logo-bar img { height: 32px; width: auto; }
+.corcoran-logo-dark { display: none; }
 
 /* ---------- FOOTER ---------- */
 footer {
@@ -1436,12 +1446,12 @@ footer {
      ============================================================ -->
 <div class="corcoran-logo-bar">
   <a href="https://www.corcoran.com" target="_blank" rel="noopener" aria-label="The Corcoran Group">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 40" height="32">
-      <text x="0" y="30" font-family="'Cormorant Garamond', Georgia, serif" font-size="28" font-weight="600" fill="#1a1a1a" letter-spacing="3">CORCORAN</text>
-    </svg>
+    <!-- Light theme: black logo / Dark theme: white logo (swapped via CSS) -->
+    <img src="corcoran-black.svg" alt="The Corcoran Group" class="corcoran-logo-light" height="32">
+    <img src="corcoran-white.svg" alt="The Corcoran Group" class="corcoran-logo-dark" height="32">
   </a>
-  <div style="margin-top: 0.5rem; font-size: 0.78rem; color: #999;">
-    <a href="https://www.corcoran.com" target="_blank" rel="noopener" style="color: #a68b5b;">www.corcoran.com</a>
+  <div style="margin-top: 0.5rem; font-size: 0.78rem; color: var(--color-ink-faint);">
+    <a href="https://www.corcoran.com" target="_blank" rel="noopener" style="color: var(--color-ink-light);">www.corcoran.com</a>
   </div>
 </div>
 
