@@ -43,6 +43,20 @@
   --nav-height: 72px;
 }
 
+/* ---------- GREY / BROWN THEME (toggle via button) ---------- */
+html.theme-grey {
+  --color-ink:        #2c2825;
+  --color-ink-light:  #5e5650;
+  --color-ink-faint:  #918a84;
+  --color-cream:      #f5f3f0;
+  --color-white:      #faf9f7;
+  --color-warm:       #9c8b78;      /* muted brown       */
+  --color-warm-light: #d9d0c6;      /* soft taupe tint    */
+  --color-warm-dark:  #7a6b5a;      /* dark brown         */
+  --color-line:       #ddd8d2;
+  --color-surface:    #edeae5;
+}
+
 html { scroll-behavior: smooth; }
 
 body {
@@ -125,6 +139,20 @@ nav .container {
 }
 .nav-cta::after { display: none !important; }
 .nav-cta:hover { background: var(--color-warm-dark); }
+
+/* Theme toggle */
+.theme-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  color: var(--color-ink-light);
+  transition: color 0.25s, background 0.25s;
+  margin-right: 0.5rem;
+}
+.theme-toggle:hover {
+  color: var(--color-ink);
+  background: var(--color-surface);
+}
 
 /* Mobile menu */
 .nav-toggle { display: none; flex-direction: column; gap: 5px; padding: 4px; }
@@ -890,6 +918,9 @@ footer {
       <a href="#neighborhoods">Neighborhoods</a>
       <a href="#contact" class="nav-cta">Get in Touch</a>
     </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch color theme" title="Switch color theme">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </button>
     <button class="nav-toggle" id="navToggle" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -1458,6 +1489,19 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     }
   });
 });
+
+// Theme toggle (gold ↔ grey/brown)
+(function() {
+  var toggle = document.getElementById('themeToggle');
+  var saved = localStorage.getItem('fe-theme');
+  if (saved === 'grey') document.documentElement.classList.add('theme-grey');
+
+  toggle.addEventListener('click', function() {
+    document.documentElement.classList.toggle('theme-grey');
+    var isGrey = document.documentElement.classList.contains('theme-grey');
+    localStorage.setItem('fe-theme', isGrey ? 'grey' : 'default');
+  });
+})();
 </script>
 
 </body>
