@@ -44,17 +44,73 @@
 }
 
 /* ---------- GREY / BROWN THEME (toggle via button) ---------- */
+/* Inspired by: cognac leather, charcoal walls, brass accents */
 html.theme-grey {
-  --color-ink:        #2c2825;
-  --color-ink-light:  #5e5650;
-  --color-ink-faint:  #918a84;
-  --color-cream:      #f5f3f0;
-  --color-white:      #faf9f7;
-  --color-warm:       #9c8b78;      /* muted brown       */
-  --color-warm-light: #d9d0c6;      /* soft taupe tint    */
-  --color-warm-dark:  #7a6b5a;      /* dark brown         */
-  --color-line:       #ddd8d2;
-  --color-surface:    #edeae5;
+  --color-ink:        #e8e0d6;      /* light text on dark bg  */
+  --color-ink-light:  #b8ada2;      /* muted warm grey        */
+  --color-ink-faint:  #7a7168;      /* faint on dark          */
+  --color-cream:      #2a2520;      /* dark warm brown        */
+  --color-white:      #1e1a17;      /* near-black base        */
+  --color-warm:       #c4956a;      /* cognac / burnt sienna  */
+  --color-warm-light: #3d352e;      /* subtle warm panel      */
+  --color-warm-dark:  #d4a574;      /* brass / gold highlight  */
+  --color-line:       #3a332d;      /* dark separator          */
+  --color-surface:    #252019;      /* dark surface            */
+}
+html.theme-grey nav {
+  background: rgba(30,26,23,0.95);
+  border-bottom-color: var(--color-line);
+}
+html.theme-grey .nav-cta {
+  background: var(--color-warm);
+  color: #1e1a17 !important;
+}
+html.theme-grey .nav-cta:hover {
+  background: var(--color-warm-dark);
+}
+html.theme-grey .btn-primary {
+  background: var(--color-warm);
+  color: #1e1a17;
+}
+html.theme-grey .btn-primary:hover {
+  background: var(--color-warm-dark);
+}
+html.theme-grey .listing-badge {
+  background: var(--color-warm);
+  color: #1e1a17;
+}
+html.theme-grey .form-row input,
+html.theme-grey .form-row textarea,
+html.theme-grey .form-row select {
+  background: var(--color-surface);
+  border-color: var(--color-line);
+  color: var(--color-ink);
+}
+html.theme-grey .form-submit {
+  background: var(--color-warm);
+  color: #1e1a17;
+}
+html.theme-grey .form-submit:hover {
+  background: var(--color-warm-dark);
+}
+html.theme-grey .philosophy {
+  background-color: #151210;
+}
+html.theme-grey .philosophy::after {
+  background: rgba(21,18,16,0.92);
+}
+html.theme-grey .ticker {
+  background: #151210;
+}
+html.theme-grey footer {
+  background: #121010;
+}
+html.theme-grey .corcoran-logo-bar svg text {
+  fill: var(--color-ink);
+}
+html.theme-grey .nav-links.open {
+  background: var(--color-white);
+  border-bottom-color: var(--color-line);
 }
 
 html { scroll-behavior: smooth; }
