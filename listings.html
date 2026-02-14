@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Current Listings — FlagshipEra</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Nunito+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* === RESET === */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* === BRAND COLORS — Corcoran === */
+:root {
+  --color-ink:        #231f20;
+  --color-ink-light:  #4a4546;
+  --color-ink-faint:  #8a8586;
+  --color-cream:      #f7f6f4;
+  --color-white:      #ffffff;
+  --color-warm:       #231f20;
+  --color-warm-light: #e5e3e0;
+  --color-warm-dark:  #231f20;
+  --color-line:       #dddbd8;
+  --color-surface:    #f0eeeb;
+  --font-heading: Georgia, "Times New Roman", serif;
+  --font-body:    Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --max-width: 1280px;
+  --nav-height: 72px;
+}
+
+/* === DARK THEME === */
+html.theme-grey {
+  --color-ink:        #e8e0d6;
+  --color-ink-light:  #b8ada2;
+  --color-ink-faint:  #7a7168;
+  --color-cream:      #2a2520;
+  --color-white:      #1e1a17;
+  --color-warm:       #c4956a;
+  --color-warm-light: #3d352e;
+  --color-warm-dark:  #d4a574;
+  --color-line:       #3a332d;
+  --color-surface:    #252019;
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-body:    "Nunito Sans", system-ui, sans-serif;
+}
+html.theme-grey nav { background: rgba(30,26,23,0.95); border-bottom-color: var(--color-line); }
+html.theme-grey .nav-cta { background: var(--color-warm); color: #1e1a17 !important; }
+html.theme-grey .nav-cta:hover { background: var(--color-warm-dark); }
+html.theme-grey .btn-primary { background: var(--color-warm); color: #1e1a17; }
+html.theme-grey .btn-primary:hover { background: var(--color-warm-dark); }
+html.theme-grey footer { background: #121010; }
+html.theme-grey .corcoran-logo-light { display: none; }
+html.theme-grey .corcoran-logo-dark { display: inline; }
+html.theme-grey .nav-links.open { background: var(--color-white); border-bottom-color: var(--color-line); }
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-white);
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+.container { width: 92%; max-width: var(--max-width); margin: 0 auto; }
+
+/* === NAV (same as index) === */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-height);
+  display: flex; align-items: center;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-line);
+  transition: background 0.3s;
+}
+nav .container { display: flex; justify-content: space-between; align-items: center; }
+.nav-logo {
+  font-family: var(--font-heading);
+  font-size: 2.18rem; font-weight: 600;
+  letter-spacing: -0.02em; color: var(--color-ink); line-height: 1;
+}
+.nav-logo span { color: var(--color-warm); }
+.nav-brand { display: flex; flex-direction: column; }
+.nav-affiliation { font-size: 0.92rem; font-weight: 400; letter-spacing: 0.04em; color: var(--color-ink-light); margin-top: -2px; }
+.nav-affiliation a { color: var(--color-warm-dark); border-bottom: 1px solid var(--color-warm-light); transition: border-color 0.25s; }
+.nav-affiliation a:hover { border-color: var(--color-warm-dark); }
+.nav-links { display: flex; gap: 2.2rem; align-items: center; }
+.nav-links a {
+  font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--color-ink-light);
+  transition: color 0.25s; position: relative;
+}
+.nav-links a::after {
+  content: ""; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1.5px; background: var(--color-warm); transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--color-ink); }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--color-ink); }
+.nav-links a.active::after { width: 100%; }
+.nav-cta {
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-white) !important; background: var(--color-ink);
+  padding: 0.6rem 1.5rem; border-radius: 2px; transition: background 0.25s;
+}
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { background: var(--color-warm-dark); }
+.theme-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  color: var(--color-ink-light); transition: color 0.25s, background 0.25s; margin-right: 0.5rem;
+}
+.theme-toggle:hover { color: var(--color-ink); background: var(--color-surface); }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+.nav-toggle span { width: 22px; height: 1.5px; background: var(--color-ink); transition: 0.3s; }
+
+/* === AGENT DISCLOSURE === */
+.agent-disclosure {
+  background: var(--color-surface); border-bottom: 1px solid var(--color-line);
+  padding: 0.6rem 0; font-size: 0.78rem; color: var(--color-ink-light);
+  line-height: 1.5; margin-top: var(--nav-height);
+}
+.agent-disclosure .container { display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; align-items: center; }
+.agent-disclosure strong { color: var(--color-ink); font-weight: 500; }
+.agent-disclosure a { color: var(--color-warm-dark); }
+
+/* === PAGE HEADER === */
+.page-header {
+  padding: calc(var(--nav-height) + 60px) 0 60px;
+  background: linear-gradient(160deg, var(--color-white) 0%, var(--color-cream) 50%, var(--color-warm-light) 100%);
+  text-align: center;
+}
+.page-header h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 500; line-height: 1.2;
+  letter-spacing: -0.02em; margin-bottom: 0.8rem;
+}
+.page-header p {
+  font-size: 1.05rem; color: var(--color-ink-light);
+  max-width: 560px; margin: 0 auto; line-height: 1.7;
+}
+.page-header .section-label {
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--color-warm-dark); margin-bottom: 1rem;
+  display: block;
+}
+
+/* === LISTING DETAIL === */
+.listing-detail {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--color-line);
+}
+.listing-detail:nth-child(even) { background: var(--color-cream); }
+.listing-detail:nth-child(odd) { background: var(--color-white); }
+
+.listing-detail-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+}
+.listing-detail-header h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 500; line-height: 1.2;
+}
+.listing-detail-header .listing-type-badge {
+  display: inline-block; background: var(--color-ink);
+  color: var(--color-white); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.4rem 1rem; border-radius: 2px;
+}
+html.theme-grey .listing-type-badge { background: var(--color-warm); color: #1e1a17; }
+
+.listing-detail-meta {
+  display: flex; gap: 2rem; flex-wrap: wrap;
+  margin-bottom: 2.5rem; font-size: 0.88rem; color: var(--color-ink-light);
+}
+.listing-detail-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+/* Image gallery */
+.listing-gallery {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.8rem;
+  margin-bottom: 2.5rem;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.listing-gallery img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.listing-gallery img:hover { transform: scale(1.03); }
+.listing-gallery .gallery-main {
+  grid-row: 1 / 3;
+  min-height: 360px;
+}
+
+/* Description + features */
+.listing-content {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.listing-description h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem; font-weight: 500; margin-bottom: 1rem;
+}
+.listing-description p {
+  font-size: 0.95rem; color: var(--color-ink-light);
+  line-height: 1.75; margin-bottom: 1rem;
+}
+.listing-features {
+  background: var(--color-surface);
+  padding: 2rem; border-radius: 3px;
+}
+.listing-features h4 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem; font-weight: 500; margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem; border-bottom: 1px solid var(--color-line);
+}
+.listing-features ul {
+  list-style: none; padding: 0;
+}
+.listing-features li {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.55rem 0; border-bottom: 1px solid var(--color-line);
+  font-size: 0.88rem;
+}
+.listing-features li:last-child { border-bottom: none; }
+.listing-features .feat-label { color: var(--color-ink-faint); }
+.listing-features .feat-value { font-weight: 500; color: var(--color-ink); }
+
+.listing-cta {
+  margin-top: 2rem;
+}
+.btn-primary {
+  display: inline-block; background: var(--color-ink); color: var(--color-white);
+  font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 0.9rem 2.2rem;
+  border-radius: 2px; transition: background 0.25s, transform 0.2s;
+}
+.btn-primary:hover { background: var(--color-warm-dark); transform: translateY(-1px); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--color-ink);
+  padding: 0.9rem 1.6rem; border: 1px solid var(--color-line);
+  border-radius: 2px; transition: border-color 0.25s, color 0.25s;
+}
+.btn-secondary:hover { border-color: var(--color-warm); color: var(--color-warm-dark); }
+
+/* === COMPLIANCE SECTIONS === */
+.fair-housing {
+  text-align: center; padding: 1.5rem 0; font-size: 0.88rem;
+  color: var(--color-ink-light); border-top: 1px solid var(--color-line); background: var(--color-cream);
+}
+.fair-housing a { color: var(--color-warm-dark); border-bottom: 1px solid var(--color-warm-light); transition: border-color 0.25s; }
+.fair-housing a:hover { border-color: var(--color-warm-dark); }
+.disclaimer {
+  background: var(--color-surface); padding: 1.5rem 0; font-size: 0.72rem;
+  color: var(--color-ink-faint); line-height: 1.6; border-top: 1px solid var(--color-line);
+}
+.corcoran-logo-bar { text-align: center; padding: 2rem 0; background: var(--color-cream); }
+.corcoran-logo-bar a { display: inline-block; transition: opacity 0.25s; }
+.corcoran-logo-bar a:hover { opacity: 0.7; }
+.corcoran-logo-bar img { height: 32px; width: auto; }
+.corcoran-logo-dark { display: none; }
+
+/* === FOOTER === */
+footer { background: var(--color-ink); color: var(--color-cream); padding: 60px 0 30px; }
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.footer-brand .nav-logo { color: var(--color-cream); }
+.footer-brand p { font-size: 0.88rem; color: rgba(255,255,255,0.45); margin-top: 0.8rem; max-width: 300px; line-height: 1.6; }
+.footer-col h5 { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-warm); margin-bottom: 1.2rem; }
+.footer-col a { display: block; font-size: 0.88rem; color: rgba(255,255,255,0.5); margin-bottom: 0.7rem; transition: color 0.25s; }
+.footer-col a:hover { color: var(--color-cream); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 1.5rem; font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+/* === SCROLL ANIM === */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+  .listing-gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .listing-gallery .gallery-main { grid-row: auto; }
+  .listing-content { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: var(--nav-height); left: 0; right: 0;
+    background: var(--color-white); padding: 1.5rem 4%; gap: 1rem;
+    border-bottom: 1px solid var(--color-line); box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  }
+  .listing-gallery { grid-template-columns: 1fr; }
+  .listing-detail-header { flex-direction: column; }
+  .footer-top { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <div class="nav-brand">
+      <a href="index.html" class="nav-logo">Flagship<span>Era</span></a>
+      <span class="nav-affiliation">Harris Bulow at <a href="https://www.corcoran.com" target="_blank" rel="noopener">The Corcoran Group</a></span>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#about">About</a>
+      <a href="index.html#services">Services</a>
+      <a href="listings.html" class="active">Listings</a>
+      <a href="index.html#neighborhoods">Neighborhoods</a>
+      <a href="index.html#contact" class="nav-cta">Get in Touch</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch color theme" title="Switch color theme">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- AGENT DISCLOSURE -->
+<div class="agent-disclosure">
+  <div class="container">
+    <strong>[FULL LICENSED NAME]</strong>
+    <span>[DOS LICENSE TITLE]</span>
+    <span>[OFFICE STREET ADDRESS]</span>
+    <span>[OFFICE PHONE NUMBER]</span>
+    <span><a href="mailto:harris.bulow@corcoran.com">harris.bulow@corcoran.com</a></span>
+  </div>
+</div>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div class="container">
+    <span class="section-label">Exclusive Availabilities</span>
+    <h1>Current Listings</h1>
+    <p>Handpicked commercial spaces across New York's most sought-after neighborhoods. Each property is selected for its potential to elevate your brand.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     LISTING 1 — OFFICE: NoHo Creative Loft
+     ============================================================ -->
+<section class="listing-detail reveal">
+  <div class="container">
+    <div class="listing-detail-header">
+      <div>
+        <span class="listing-type-badge">Office</span>
+        <h2>NoHo Creative Loft</h2>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 600;">$68 / SF</div>
+        <div style="font-size: 0.82rem; color: var(--color-ink-faint);">6,800 SF</div>
+      </div>
+    </div>
+    <div class="listing-detail-meta">
+      <span>NoHo, Manhattan</span>
+      <span>Full Floor</span>
+      <span>Available Immediately</span>
+    </div>
+    <div class="listing-gallery">
+      <img class="gallery-main" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" alt="NoHo loft office - main view">
+      <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=600&q=80" alt="NoHo loft office - open plan">
+      <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&q=80" alt="NoHo loft office - meeting area">
+    </div>
+    <div class="listing-content">
+      <div class="listing-description">
+        <h3>About This Space</h3>
+        <p>This full-floor loft occupies 6,800 square feet in one of NoHo's most coveted pre-war buildings. The space features soaring 14-foot ceilings with original Corinthian columns, wide-plank hardwood floors, and oversized windows on three exposures that flood the interior with natural light throughout the day.</p>
+        <p>Ideal for creative agencies, tech companies, or design studios seeking an inspiring headquarters. The open floor plan can be configured to suit a variety of layouts, from collaborative open workspaces to a mix of private offices and common areas. The building offers a staffed lobby, freight elevator, and 24/7 access.</p>
+        <p>Located steps from the Broadway-Lafayette subway station, surrounded by galleries, restaurants, and the creative energy that defines NoHo.</p>
+        <div class="listing-cta">
+          <a href="index.html#contact" class="btn-primary">Schedule a Viewing</a>
+        </div>
+      </div>
+      <div class="listing-features">
+        <h4>Key Features</h4>
+        <ul>
+          <li><span class="feat-label">Size</span><span class="feat-value">6,800 SF</span></li>
+          <li><span class="feat-label">Ceiling Height</span><span class="feat-value">14 ft</span></li>
+          <li><span class="feat-label">Floor</span><span class="feat-value">Full Floor (4th)</span></li>
+          <li><span class="feat-label">Condition</span><span class="feat-value">Built-Out</span></li>
+          <li><span class="feat-label">Windows</span><span class="feat-value">3 Exposures</span></li>
+          <li><span class="feat-label">Flooring</span><span class="feat-value">Original Hardwood</span></li>
+          <li><span class="feat-label">Elevator</span><span class="feat-value">Passenger + Freight</span></li>
+          <li><span class="feat-label">Access</span><span class="feat-value">24/7</span></li>
+          <li><span class="feat-label">Lease Term</span><span class="feat-value">5-10 Years</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LISTING 2 — OFFICE: Flatiron Tech Suite
+     ============================================================ -->
+<section class="listing-detail reveal">
+  <div class="container">
+    <div class="listing-detail-header">
+      <div>
+        <span class="listing-type-badge">Office</span>
+        <h2>Flatiron Tech Suite</h2>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 600;">$72 / SF</div>
+        <div style="font-size: 0.82rem; color: var(--color-ink-faint);">4,500 SF</div>
+      </div>
+    </div>
+    <div class="listing-detail-meta">
+      <span>Flatiron District, Manhattan</span>
+      <span>Partial Floor</span>
+      <span>Available Q2 2026</span>
+    </div>
+    <div class="listing-gallery">
+      <img class="gallery-main" src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=800&q=80" alt="Flatiron office - main view">
+      <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=600&q=80" alt="Flatiron office - workspace">
+      <img src="https://images.unsplash.com/photo-1564069114553-7215e1ff1890?w=600&q=80" alt="Flatiron office - conference room">
+    </div>
+    <div class="listing-content">
+      <div class="listing-description">
+        <h3>About This Space</h3>
+        <p>A modern 4,500 SF office suite in the heart of the Flatiron District, one of Manhattan's most vibrant tech and startup corridors. The space has been recently renovated with a contemporary buildout featuring glass-enclosed conference rooms, a reception area, and an open bullpen that seats up to 35.</p>
+        <p>The building is LEED-certified and offers best-in-class amenities including a rooftop terrace, bike storage, and a tenant lounge. Situated at the crossroads of Broadway and Fifth Avenue, the location provides unmatched transit access and proximity to Madison Square Park.</p>
+        <p>Perfect for a growing technology firm, venture fund, or professional services company seeking a polished Flatiron address with modern infrastructure and fiber connectivity.</p>
+        <div class="listing-cta">
+          <a href="index.html#contact" class="btn-primary">Schedule a Viewing</a>
+        </div>
+      </div>
+      <div class="listing-features">
+        <h4>Key Features</h4>
+        <ul>
+          <li><span class="feat-label">Size</span><span class="feat-value">4,500 SF</span></li>
+          <li><span class="feat-label">Ceiling Height</span><span class="feat-value">11 ft</span></li>
+          <li><span class="feat-label">Floor</span><span class="feat-value">8th Floor</span></li>
+          <li><span class="feat-label">Condition</span><span class="feat-value">Recently Renovated</span></li>
+          <li><span class="feat-label">Conference Rooms</span><span class="feat-value">2 Glass-Enclosed</span></li>
+          <li><span class="feat-label">Workstations</span><span class="feat-value">Up to 35</span></li>
+          <li><span class="feat-label">Building Class</span><span class="feat-value">Class A, LEED</span></li>
+          <li><span class="feat-label">Amenities</span><span class="feat-value">Rooftop, Lounge</span></li>
+          <li><span class="feat-label">Lease Term</span><span class="feat-value">3-7 Years</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LISTING 3 — RETAIL: SoHo Corner Flagship
+     ============================================================ -->
+<section class="listing-detail reveal">
+  <div class="container">
+    <div class="listing-detail-header">
+      <div>
+        <span class="listing-type-badge">Retail</span>
+        <h2>SoHo Corner Flagship</h2>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 600;">Upon Request</div>
+        <div style="font-size: 0.82rem; color: var(--color-ink-faint);">4,200 SF</div>
+      </div>
+    </div>
+    <div class="listing-detail-meta">
+      <span>SoHo, Manhattan</span>
+      <span>Ground Floor + Basement</span>
+      <span>Available Immediately</span>
+    </div>
+    <div class="listing-gallery">
+      <img class="gallery-main" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80" alt="SoHo retail - storefront">
+      <img src="https://images.unsplash.com/photo-1604176354204-9268737828e4?w=600&q=80" alt="SoHo retail - interior">
+      <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=600&q=80" alt="SoHo retail - display area">
+    </div>
+    <div class="listing-content">
+      <div class="listing-description">
+        <h3>About This Space</h3>
+        <p>A rare corner position on one of SoHo's most trafficked retail corridors. This 4,200 SF space spans the ground floor and a full-height basement, offering 25 feet of prime frontage with floor-to-ceiling glass on two street faces. The corner exposure provides exceptional visibility and natural branding opportunities.</p>
+        <p>The ground level features 16-foot ceilings, original cast-iron columns, and polished concrete floors. The lower level offers flexible storage, stock room, or additional selling space with its own delivery entrance. Current configuration includes a dramatic double-height entrance and gallery-quality lighting throughout.</p>
+        <p>Surrounded by luxury flagships and global brands, this location is ideal for a fashion house, lifestyle brand, or experiential retail concept looking to make a statement in one of the world's most iconic shopping destinations.</p>
+        <div class="listing-cta">
+          <a href="index.html#contact" class="btn-primary">Schedule a Viewing</a>
+        </div>
+      </div>
+      <div class="listing-features">
+        <h4>Key Features</h4>
+        <ul>
+          <li><span class="feat-label">Size</span><span class="feat-value">4,200 SF (2 levels)</span></li>
+          <li><span class="feat-label">Frontage</span><span class="feat-value">25 ft (corner)</span></li>
+          <li><span class="feat-label">Ceiling Height</span><span class="feat-value">16 ft (ground)</span></li>
+          <li><span class="feat-label">Position</span><span class="feat-value">Corner, 2 exposures</span></li>
+          <li><span class="feat-label">Facade</span><span class="feat-value">Floor-to-ceiling glass</span></li>
+          <li><span class="feat-label">Basement</span><span class="feat-value">Full height, separate entry</span></li>
+          <li><span class="feat-label">Foot Traffic</span><span class="feat-value">Very High</span></li>
+          <li><span class="feat-label">Neighbors</span><span class="feat-value">Luxury flagships</span></li>
+          <li><span class="feat-label">Lease Term</span><span class="feat-value">10+ Years</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LISTING 4 — RETAIL: Madison Avenue Luxury Boutique
+     ============================================================ -->
+<section class="listing-detail reveal">
+  <div class="container">
+    <div class="listing-detail-header">
+      <div>
+        <span class="listing-type-badge">Retail</span>
+        <h2>Madison Avenue Luxury Boutique</h2>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 600;">Upon Request</div>
+        <div style="font-size: 0.82rem; color: var(--color-ink-faint);">3,100 SF</div>
+      </div>
+    </div>
+    <div class="listing-detail-meta">
+      <span>Upper East Side, Manhattan</span>
+      <span>Ground Floor</span>
+      <span>Available Q3 2026</span>
+    </div>
+    <div class="listing-gallery">
+      <img class="gallery-main" src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&q=80" alt="Madison Ave retail - facade">
+      <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=600&q=80" alt="Madison Ave retail - street view">
+      <img src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=600&q=80" alt="Madison Ave retail - interior">
+    </div>
+    <div class="listing-content">
+      <div class="listing-description">
+        <h3>About This Space</h3>
+        <p>A trophy retail location on Upper Madison Avenue between 65th and 66th Streets, in the heart of New York's most prestigious luxury corridor. This 3,100 SF ground-floor space offers 20 feet of frontage with elegant limestone detailing and a private entrance that sets the tone for a high-end brand experience.</p>
+        <p>The interior features 13-foot ceilings, warm oak flooring, and a layout that flows naturally from the street through a generous selling floor to a private VIP salon in the rear. The space has been white-boxed and is ready for a luxury buildout. A small mezzanine provides additional office or storage flexibility.</p>
+        <p>Ideal for a luxury fashion brand, fine jewelry house, or art gallery seeking the cachet of a Madison Avenue address alongside neighbors such as internationally recognized heritage brands.</p>
+        <div class="listing-cta">
+          <a href="index.html#contact" class="btn-primary">Schedule a Viewing</a>
+        </div>
+      </div>
+      <div class="listing-features">
+        <h4>Key Features</h4>
+        <ul>
+          <li><span class="feat-label">Size</span><span class="feat-value">3,100 SF + Mezzanine</span></li>
+          <li><span class="feat-label">Frontage</span><span class="feat-value">20 ft</span></li>
+          <li><span class="feat-label">Ceiling Height</span><span class="feat-value">13 ft</span></li>
+          <li><span class="feat-label">Condition</span><span class="feat-value">White Box</span></li>
+          <li><span class="feat-label">Facade</span><span class="feat-value">Limestone, private entry</span></li>
+          <li><span class="feat-label">VIP Area</span><span class="feat-value">Private rear salon</span></li>
+          <li><span class="feat-label">Mezzanine</span><span class="feat-value">Office / Storage</span></li>
+          <li><span class="feat-label">Corridor</span><span class="feat-value">Luxury Row</span></li>
+          <li><span class="feat-label">Lease Term</span><span class="feat-value">10+ Years</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LISTING 5 — RESTAURANT: West Village Bistro
+     ============================================================ -->
+<section class="listing-detail reveal">
+  <div class="container">
+    <div class="listing-detail-header">
+      <div>
+        <span class="listing-type-badge">Restaurant</span>
+        <h2>West Village Bistro Space</h2>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 600;">$45,000 / mo</div>
+        <div style="font-size: 0.82rem; color: var(--color-ink-faint);">3,500 SF</div>
+      </div>
+    </div>
+    <div class="listing-detail-meta">
+      <span>West Village, Manhattan</span>
+      <span>Ground Floor + Garden</span>
+      <span>Available Immediately</span>
+    </div>
+    <div class="listing-gallery">
+      <img class="gallery-main" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80" alt="West Village restaurant - dining room">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="West Village restaurant - plating">
+      <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600&q=80" alt="West Village restaurant - bar area">
+    </div>
+    <div class="listing-content">
+      <div class="listing-description">
+        <h3>About This Space</h3>
+        <p>A turnkey restaurant space on one of the West Village's most charming tree-lined blocks. This 3,500 SF space is delivered fully equipped with a commercial kitchen, Type 1 hood, grease trap, and all necessary ventilation for full-service dining. The previous tenant invested significantly in the buildout, which is included in the lease.</p>
+        <p>The dining room seats 65 and features exposed brick walls, tin ceilings, and warm pendant lighting that creates an intimate neighborhood atmosphere. A private garden in the rear adds 30 additional seats for al fresco dining during warmer months, a rare and highly coveted feature in the Village.</p>
+        <p>An established liquor license transfers with the lease. The space is ideal for a chef-driven concept, upscale bistro, or wine bar looking to join one of New York's most beloved dining neighborhoods.</p>
+        <div class="listing-cta">
+          <a href="index.html#contact" class="btn-primary">Schedule a Viewing</a>
+        </div>
+      </div>
+      <div class="listing-features">
+        <h4>Key Features</h4>
+        <ul>
+          <li><span class="feat-label">Size</span><span class="feat-value">3,500 SF + Garden</span></li>
+          <li><span class="feat-label">Seats</span><span class="feat-value">65 indoor + 30 garden</span></li>
+          <li><span class="feat-label">Kitchen</span><span class="feat-value">Full commercial, Type 1</span></li>
+          <li><span class="feat-label">Ventilation</span><span class="feat-value">Vented, grease trap</span></li>
+          <li><span class="feat-label">Liquor License</span><span class="feat-value">Transfers with lease</span></li>
+          <li><span class="feat-label">Garden</span><span class="feat-value">Private rear, 30 seats</span></li>
+          <li><span class="feat-label">Condition</span><span class="feat-value">Turnkey</span></li>
+          <li><span class="feat-label">Ceiling</span><span class="feat-value">Tin, 12 ft</span></li>
+          <li><span class="feat-label">Lease Term</span><span class="feat-value">10-15 Years</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LISTING 6 — RESTAURANT: Tribeca Grand Restaurant
+     ============================================================ -->
+<section class="listing-detail reveal">
+  <div class="container">
+    <div class="listing-detail-header">
+      <div>
+        <span class="listing-type-badge">Restaurant</span>
+        <h2>Tribeca Grand Restaurant</h2>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 600;">$62,000 / mo</div>
+        <div style="font-size: 0.82rem; color: var(--color-ink-faint);">5,200 SF</div>
+      </div>
+    </div>
+    <div class="listing-detail-meta">
+      <span>Tribeca, Manhattan</span>
+      <span>Ground + Cellar</span>
+      <span>Available Q1 2026</span>
+    </div>
+    <div class="listing-gallery">
+      <img class="gallery-main" src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80" alt="Tribeca restaurant - main dining">
+      <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=600&q=80" alt="Tribeca restaurant - private dining">
+      <img src="https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?w=600&q=80" alt="Tribeca restaurant - bar">
+    </div>
+    <div class="listing-content">
+      <div class="listing-description">
+        <h3>About This Space</h3>
+        <p>A landmark restaurant space spanning 5,200 square feet across two levels in the heart of Tribeca. The ground floor features a dramatic 22-foot barrel-vaulted ceiling with original exposed brick, creating an unforgettable dining atmosphere. A sweeping marble bar anchors the front of the house, with the main dining room flowing into a private event space at the rear.</p>
+        <p>The cellar level houses a full commercial kitchen, extensive dry and cold storage, staff facilities, and a private wine cellar that can double as an intimate dining room for up to 12 guests. All mechanical systems, including HVAC, fire suppression, and ventilation, have been recently upgraded.</p>
+        <p>This is a destination-caliber space suited for a high-profile restaurant group, celebrity chef concept, or hospitality brand looking to establish a flagship presence in one of Manhattan's most affluent and discerning dining neighborhoods.</p>
+        <div class="listing-cta">
+          <a href="index.html#contact" class="btn-primary">Schedule a Viewing</a>
+        </div>
+      </div>
+      <div class="listing-features">
+        <h4>Key Features</h4>
+        <ul>
+          <li><span class="feat-label">Size</span><span class="feat-value">5,200 SF (2 levels)</span></li>
+          <li><span class="feat-label">Seats</span><span class="feat-value">120 + 12 wine cellar</span></li>
+          <li><span class="feat-label">Ceiling</span><span class="feat-value">22 ft barrel vault</span></li>
+          <li><span class="feat-label">Kitchen</span><span class="feat-value">Full commercial (cellar)</span></li>
+          <li><span class="feat-label">Bar</span><span class="feat-value">30 ft marble</span></li>
+          <li><span class="feat-label">Private Dining</span><span class="feat-value">Event space + wine room</span></li>
+          <li><span class="feat-label">Wine Cellar</span><span class="feat-value">Climate-controlled</span></li>
+          <li><span class="feat-label">Systems</span><span class="feat-value">Recently upgraded</span></li>
+          <li><span class="feat-label">Lease Term</span><span class="feat-value">15-20 Years</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAIR HOUSING -->
+<div class="fair-housing">
+  <div class="container">
+    <a href="https://linktr.ee/corcorangroup" target="_blank" rel="noopener">We are committed to upholding the principles of all applicable fair housing laws.</a>
+  </div>
+</div>
+
+<!-- CORCORAN LOGO -->
+<div class="corcoran-logo-bar">
+  <a href="https://www.corcoran.com" target="_blank" rel="noopener" aria-label="The Corcoran Group">
+    <img src="corcoran-black.svg" alt="The Corcoran Group" class="corcoran-logo-light" height="32">
+    <img src="corcoran-white.svg" alt="The Corcoran Group" class="corcoran-logo-dark" height="32">
+  </a>
+  <div style="margin-top: 0.5rem; font-size: 0.78rem; color: var(--color-ink-faint);">
+    <a href="https://www.corcoran.com" target="_blank" rel="noopener" style="color: var(--color-ink-light);">www.corcoran.com</a>
+  </div>
+</div>
+
+<!-- AGENT DISCLOSURE — FOOTER -->
+<div class="agent-disclosure" style="margin-top: 0; border-top: 1px solid var(--color-line); border-bottom: none;">
+  <div class="container">
+    <strong>[FULL LICENSED NAME]</strong>
+    <span>[DOS LICENSE TITLE]</span>
+    <span>[OFFICE STREET ADDRESS]</span>
+    <span>[OFFICE PHONE NUMBER]</span>
+    <span><a href="mailto:harris.bulow@corcoran.com">harris.bulow@corcoran.com</a></span>
+  </div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <div class="container">
+    Equal Housing Opportunity. This website is not the official website of The Corcoran Group or its affiliated companies, and neither The Corcoran Group nor its affiliated companies in any way warrant the accuracy of any information contained herein. Any property or services offered for sale on this website shall not be considered an offer to sell such goods or services in any state other New York. Prerequisites for prospective homebuyers in order to receive services from Corcoran: There is no general requirement to provide photo identification prior to a property showing. However, prior to entry to a Corcoran office, customers may be required to present photo identification for security or similar purposes. Also, individual property owners may require photo identification prior to a showing, and we will communicate this information to buyers or tenants in advance of such showing. An exclusive buyer representation agreement is not required. A pre-approval for a mortgage loan is not required to work with us, per se, however, individual property owners may require one &ndash; and if so, we will communicate that to buyers as applicable for any properties buyers may wish to view.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">Flagship<span>Era</span></a>
+        <p>Harris Bulow at <a href="https://www.corcoran.com" target="_blank" rel="noopener" style="color: var(--color-warm);">The Corcoran Group</a>. Transforming physical spaces into powerful brand narratives across New York's most iconic neighborhoods.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <a href="index.html#services">Retail Leasing</a>
+        <a href="index.html#services">Office Advisory</a>
+        <a href="index.html#services">Investment Sales</a>
+        <a href="index.html#services">Brand Strategy</a>
+      </div>
+      <div class="footer-col">
+        <h5>Markets</h5>
+        <a href="index.html#neighborhoods">SoHo</a>
+        <a href="index.html#neighborhoods">Madison Avenue</a>
+        <a href="index.html#neighborhoods">NoHo</a>
+        <a href="index.html#neighborhoods">West Village</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 FlagshipEra. All rights reserved.</span>
+      <span>New York Commercial Real Estate Brokerage</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile menu toggle
+document.getElementById('navToggle').addEventListener('click', function() {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// Scroll reveal animation
+var reveals = document.querySelectorAll('.reveal');
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(function(el) { observer.observe(el); });
+
+// Theme toggle
+(function() {
+  var toggle = document.getElementById('themeToggle');
+  var saved = localStorage.getItem('fe-theme');
+  if (saved === 'grey') document.documentElement.classList.add('theme-grey');
+  toggle.addEventListener('click', function() {
+    document.documentElement.classList.toggle('theme-grey');
+    var isGrey = document.documentElement.classList.contains('theme-grey');
+    localStorage.setItem('fe-theme', isGrey ? 'grey' : 'default');
+  });
+})();
+</script>
+
+</body>
+</html>
