@@ -915,6 +915,22 @@ footer {
   color: rgba(255,255,255,0.3);
 }
 
+/* ---------- SECTION IDENTIFIERS ---------- */
+.section-id {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 0.55rem;
+  font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--color-line);
+  user-select: none;
+  line-height: 1;
+  z-index: 1;
+  opacity: 0.7;
+}
+
 /* ---------- SCROLL ANIMATION ---------- */
 .reveal {
   opacity: 0;
@@ -968,10 +984,10 @@ footer {
 <body>
 
 <!-- ============================================================
-     NAVIGATION
-     To edit: change link text and href values below
+     1.a — NAVIGATION
      ============================================================ -->
 <nav>
+  <span class="section-id" style="top:auto;bottom:2px;right:8px;">1.a</span>
   <div class="container">
     <div class="nav-brand">
       <a href="#" class="nav-logo">Flagship<span>Era</span></a>
@@ -993,11 +1009,9 @@ footer {
   </div>
 </nav>
 
-<!-- ============================================================
-     AGENT DISCLOSURE (Corcoran Compliance)
-     Update placeholders with actual agent details
-     ============================================================ -->
-<div class="agent-disclosure">
+<!-- 1.b — AGENT DISCLOSURE (top) -->
+<div class="agent-disclosure" style="position:relative;">
+  <span class="section-id">1.b</span>
   <div class="container">
     <strong>[FULL LICENSED NAME]</strong>
     <span>[DOS LICENSE TITLE]</span>
@@ -1007,11 +1021,9 @@ footer {
   </div>
 </div>
 
-<!-- ============================================================
-     HERO SECTION
-     Edit the headline, sub-text, and button labels below
-     ============================================================ -->
+<!-- 1.c — HERO SECTION -->
 <section class="hero" id="hero">
+  <span class="section-id">1.c</span>
   <div class="container">
     <div class="hero-text">
       <span class="hero-eyebrow">New York Commercial Real Estate</span>
@@ -1042,11 +1054,9 @@ footer {
   </div>
 </section>
 
-<!-- ============================================================
-     NEIGHBORHOOD TICKER
-     Edit or add neighborhood names below
-     ============================================================ -->
-<div class="ticker">
+<!-- 1.d — NEIGHBORHOOD TICKER -->
+<div class="ticker" style="position:relative;">
+  <span class="section-id" style="color:rgba(255,255,255,0.15);">1.d</span>
   <div class="ticker-track" id="tickerTrack">
     <span>SoHo</span><span>Madison Avenue</span><span>NoHo</span>
     <span>West Village</span><span>NoLita</span><span>Williamsburg</span>
@@ -1060,11 +1070,9 @@ footer {
   </div>
 </div>
 
-<!-- ============================================================
-     ABOUT SECTION
-     Edit text, statistics numbers, and labels below
-     ============================================================ -->
-<section class="section about" id="about">
+<!-- 1.e — ABOUT SECTION -->
+<section class="section about" id="about" style="position:relative;">
+  <span class="section-id">1.e</span>
   <div class="container">
     <div class="about-visual reveal">
       <div class="about-image-main">
@@ -1105,11 +1113,9 @@ footer {
   </div>
 </section>
 
-<!-- ============================================================
-     SERVICES SECTION
-     Edit card titles, descriptions, and tags below
-     ============================================================ -->
-<section class="section services" id="services">
+<!-- 1.f — SERVICES SECTION -->
+<section class="section services" id="services" style="position:relative;">
+  <span class="section-id">1.f</span>
   <div class="container">
     <div class="services-header">
       <div>
@@ -1205,11 +1211,9 @@ footer {
   </div>
 </section>
 
-<!-- ============================================================
-     FEATURED LISTINGS
-     Edit property cards below — change neighborhood, title, details, price, size
-     ============================================================ -->
-<section class="section listings" id="listings">
+<!-- 1.g — FEATURED LISTINGS -->
+<section class="section listings" id="listings" style="position:relative;">
+  <span class="section-id">1.g</span>
   <div class="container">
     <div class="listings-header">
       <div>
@@ -1275,11 +1279,9 @@ footer {
   </div>
 </section>
 
-<!-- ============================================================
-     PHILOSOPHY QUOTE
-     Edit the quote text and attribution below
-     ============================================================ -->
+<!-- 1.h — PHILOSOPHY QUOTE -->
 <section class="philosophy" id="philosophy">
+  <span class="section-id" style="color:rgba(255,255,255,0.15);">1.h</span>
   <div class="container reveal">
     <span class="section-label">Our Philosophy</span>
     <p class="philosophy-quote">
@@ -1292,11 +1294,9 @@ footer {
   </div>
 </section>
 
-<!-- ============================================================
-     NEIGHBORHOODS
-     Edit neighborhood names and types below
-     ============================================================ -->
-<section class="section neighborhoods" id="neighborhoods">
+<!-- 1.i — NEIGHBORHOODS -->
+<section class="section neighborhoods" id="neighborhoods" style="position:relative;">
+  <span class="section-id">1.i</span>
   <div class="container">
     <span class="section-label">Markets We Know</span>
     <h2 class="section-heading">New York's Most Coveted<br>Commercial Corridors</h2>
@@ -1365,11 +1365,9 @@ footer {
   </div>
 </section>
 
-<!-- ============================================================
-     CONTACT / CTA SECTION
-     Edit form fields, contact info, and office details below
-     ============================================================ -->
-<section class="section cta-section" id="contact">
+<!-- 1.j — CONTACT / CTA SECTION -->
+<section class="section cta-section" id="contact" style="position:relative;">
+  <span class="section-id">1.j</span>
   <div class="container">
     <div class="reveal">
       <span class="section-label">Get in Touch</span>
@@ -1432,19 +1430,17 @@ footer {
   </div>
 </section>
 
-<!-- ============================================================
-     FAIR HOUSING NOTICE (Corcoran Compliance)
-     ============================================================ -->
-<div class="fair-housing">
+<!-- 1.k — FAIR HOUSING NOTICE -->
+<div class="fair-housing" style="position:relative;">
+  <span class="section-id">1.k</span>
   <div class="container">
     <a href="https://linktr.ee/corcorangroup" target="_blank" rel="noopener">We are committed to upholding the principles of all applicable fair housing laws.</a>
   </div>
 </div>
 
-<!-- ============================================================
-     CORCORAN LOGO (Corcoran Compliance — links to corcoran.com)
-     ============================================================ -->
-<div class="corcoran-logo-bar">
+<!-- 1.l — CORCORAN LOGO -->
+<div class="corcoran-logo-bar" style="position:relative;">
+  <span class="section-id">1.l</span>
   <a href="https://www.corcoran.com" target="_blank" rel="noopener" aria-label="The Corcoran Group">
     <!-- Light theme: black logo / Dark theme: white logo (swapped via CSS) -->
     <img src="corcoran-black.svg" alt="The Corcoran Group" class="corcoran-logo-light" height="32">
@@ -1455,10 +1451,9 @@ footer {
   </div>
 </div>
 
-<!-- ============================================================
-     AGENT DISCLOSURE — FOOTER (Corcoran Compliance)
-     ============================================================ -->
-<div class="agent-disclosure" style="margin-top: 0; border-top: 1px solid var(--color-line); border-bottom: none;">
+<!-- 1.m — AGENT DISCLOSURE (footer) -->
+<div class="agent-disclosure" style="margin-top: 0; border-top: 1px solid var(--color-line); border-bottom: none; position:relative;">
+  <span class="section-id">1.m</span>
   <div class="container">
     <strong>[FULL LICENSED NAME]</strong>
     <span>[DOS LICENSE TITLE]</span>
@@ -1468,20 +1463,17 @@ footer {
   </div>
 </div>
 
-<!-- ============================================================
-     EQUAL HOUSING DISCLAIMER (Corcoran Compliance)
-     ============================================================ -->
-<div class="disclaimer">
+<!-- 1.n — EQUAL HOUSING DISCLAIMER -->
+<div class="disclaimer" style="position:relative;">
+  <span class="section-id">1.n</span>
   <div class="container">
     Equal Housing Opportunity. This website is not the official website of The Corcoran Group or its affiliated companies, and neither The Corcoran Group nor its affiliated companies in any way warrant the accuracy of any information contained herein. Any property or services offered for sale on this website shall not be considered an offer to sell such goods or services in any state other New York. Prerequisites for prospective homebuyers in order to receive services from Corcoran: There is no general requirement to provide photo identification prior to a property showing. However, prior to entry to a Corcoran office, customers may be required to present photo identification for security or similar purposes. Also, individual property owners may require photo identification prior to a showing, and we will communicate this information to buyers or tenants in advance of such showing. An exclusive buyer representation agreement is not required. A pre-approval for a mortgage loan is not required to work with us, per se, however, individual property owners may require one &ndash; and if so, we will communicate that to buyers as applicable for any properties buyers may wish to view.
   </div>
 </div>
 
-<!-- ============================================================
-     FOOTER
-     Edit links, copyright year, and brand description below
-     ============================================================ -->
-<footer>
+<!-- 1.o — FOOTER -->
+<footer style="position:relative;">
+  <span class="section-id" style="color:rgba(255,255,255,0.15);">1.o</span>
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
